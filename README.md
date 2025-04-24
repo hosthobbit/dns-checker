@@ -1,16 +1,19 @@
 # DNS Checker
 
-DNS Checker is a Python-based application designed to interact with GitHub and WhatsApp using the Model Context Protocol (MCP). It provides tools for DNS-related operations and integrates with external services for enhanced functionality.
+DNS Checker is a Python-based application designed to perform DNS-related operations and provide comprehensive domain information. It includes features for checking MX records, SPF, DKIM, DMARC, website status, SSL certificates, and WHOIS information.
 
 ## Features
-- **GitHub Integration**: Interact with GitHub repositories and manage workflows using the GitHub MCP server.
-- **WhatsApp Integration**: Communicate with WhatsApp using the WhatsApp MCP server.
-- **DNS Operations**: Perform DNS-related checks and operations.
+- **DNS Record Checks**: Retrieve and categorize MX, A, CNAME, NS, SPF, DKIM, and DMARC records.
+- **Website Status**: Check if a website is live, its response time, and any redirects.
+- **SSL Certificate Info**: Get SSL certificate details, including issuer and expiry.
+- **WHOIS Information**: Retrieve domain registration details.
+- **Domain Grouping**: Group domains by nameserver or migration complexity.
+- **Session Management**: Save and load domain lists for later use.
 
 ## Prerequisites
 - Python 3.8 or higher
-- Docker (for MCP server interactions)
-- Git (for version control)
+- Flask
+- Required Python libraries (see `requirements.txt`)
 
 ## Installation
 1. Clone the repository:
@@ -25,24 +28,27 @@ DNS Checker is a Python-based application designed to interact with GitHub and W
    ```
 
 ## Usage
-1. Start the MCP servers:
-   - **GitHub MCP Server**:
-     ```bash
-     docker run -i --rm -e GITHUB_PERSONAL_ACCESS_TOKEN=your_token ghcr.io/github/github-mcp-server
-     ```
-   - **WhatsApp MCP Server**:
-     Follow the instructions in the `whatsapp-mcp` directory.
-
-2. Run the application:
+1. Start the application:
    ```bash
    python app.py
    ```
 
-3. Access the web interface:
+2. Access the web interface:
    Open your browser and navigate to `http://localhost:5000`.
 
 ## Configuration
-Update the `cline_mcp_settings.json` file to configure the application settings, including API keys and server details.
+- Update the `app.py` file to modify application settings, such as the secret key for session management.
+- The application uses a cache stored in a temporary directory for domain information.
+
+## API Endpoints
+- `/check`: Categorize domains by their MX records.
+- `/get-mx-records`: Retrieve full MX records for a domain.
+- `/get-domain-info`: Get comprehensive DNS information for a domain.
+- `/save-domain-list`: Save a list of domains with a name.
+- `/get-saved-lists`: Retrieve saved domain lists.
+- `/load-domain-list`: Load a saved domain list by name.
+- `/group-by-nameserver`: Group domains by their nameservers.
+- `/group-by-complexity`: Group domains by migration complexity.
 
 ## Contributing
 Contributions are welcome! Please fork the repository and submit a pull request.
